@@ -1,0 +1,102 @@
+# NEXUS CHAT
+
+A real-time chat application built with Node.js, Socket.IO, and vanilla JavaScript.
+
+---
+
+## Features
+
+- **Global Channel** — `#general` room for all connected users
+- **Direct Messages** — private one-on-one conversations
+- **Typing Indicators** — see when others are typing
+- **Message Reactions** — react with emojis (right-click or long-press a message)
+- **Read Receipts** — single ✓ (sent) and double ✓✓ (seen)
+- **Emoji Picker** — built-in emoji panel
+- **Online Presence** — live user list with online/offline status
+- **Unread Badges** — unread counts on DMs and general channel
+- **Dark / Light Theme** — toggle in the sidebar footer
+- **Session Persistence** — username saved across refreshes
+- **Mobile Responsive** — slide-out sidebar on small screens
+
+---
+
+## Project Structure
+
+```
+ChatApp/
+├── index.html    # UI markup & layout
+├── style.css     # Styling & CSS variables (dark/light themes)
+├── code.js       # Frontend logic (Socket.IO client)
+└── server.js     # Backend (Express + Socket.IO server)
+```
+
+---
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) v16 or higher
+- npm (comes with Node.js)
+
+---
+
+## Installation
+
+```bash
+# 1. Clone or download the project
+git clone <your-repo-url>
+cd ChatApp
+
+# 2. Install dependencies
+npm install express socket.io
+```
+
+---
+
+## Running the App
+
+```bash
+node server.js
+```
+
+Then open your browser and go to:
+
+```
+http://localhost:5001
+```
+
+To use a different port, set the `PORT` environment variable:
+
+```bash
+PORT=3000 node server.js
+```
+
+---
+
+## Usage
+
+1. Open the app in your browser.
+2. Enter a username (up to 24 characters) and click **Enter the nexus**.
+3. Start chatting in **#general**, or click any user in the sidebar to open a **Direct Message**.
+4. Use the 😊 button to open the emoji picker.
+5. **Right-click** (or long-press on mobile) a message to add a reaction.
+6. Click the sun/moon icon in the sidebar footer to toggle **dark/light theme**.
+7. Click the exit icon to log out and clear your session.
+
+---
+
+## Tech Stack
+
+| Layer    | Technology                        |
+|----------|-----------------------------------|
+| Server   | Node.js, Express                  |
+| Realtime | Socket.IO                         |
+| Frontend | Vanilla JS, HTML5, CSS3           |
+| Fonts    | Syne, Instrument Sans, Geist Mono |
+
+---
+
+## Notes
+
+- Chat history is stored **in-memory** (last 100 messages). Data is lost when the server restarts.
+- No database or authentication is included — this is a demo/prototype.
+- For production use, consider adding MongoDB/Redis for persistence and JWT for auth.

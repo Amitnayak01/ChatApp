@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Geist+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- JOIN SCREEN -->
+  <div class="screen join-screen active" id="join-screen">
+    <div class="join-bg">
+      <div class="join-grid"></div>
+      <div class="join-orb"></div>
+      <div class="join-orb-2"></div>
+    </div>
+    <div class="join-card">
+      <div class="join-logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2L20 7V17L12 22L4 17V7L12 2Z"/>
+            <circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <span class="logo-wordmark">NEXUS</span>
+      </div>
+      <p class="join-sub">Real-time messaging for humans</p>
+      <div class="input-wrap">
+        <input type="text" id="username" class="join-input" placeholder="Choose your handle" maxlength="24" autocomplete="off" />
+        <span class="input-count" id="char-count">0/24</span>
+      </div>
+      <button id="join-user" class="join-btn">
+        <span>Enter the nexus</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <p class="join-hint">↵ press enter to join</p>
+    </div>
+  </div>
+
+  <!-- CHAT SCREEN -->
+  <div class="screen chat-screen" id="chat-screen">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 2L20 7V17L12 22L4 17V7L12 2Z"/>
+              <circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <span>NEXUS</span>
+        </div>
+        <button class="icon-btn sidebar-close" id="sidebar-close" title="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="user-search" placeholder="Search users…" class="search-input" />
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-label"><span>Channels</span></div>
+        <div class="channel-item active" data-room="general" id="channel-item-general">
+          <span class="channel-hash">#</span>
+          <span class="channel-name">general</span>
+          <span class="unread-badge" id="general-unread" style="display:none"></span>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-label">
+          <span>Online</span>
+          <span class="online-count" id="online-count">0</span>
+        </div>
+        <div class="user-list" id="user-list"></div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="my-profile" id="my-profile">
+          <div class="my-avatar" id="my-avatar-sidebar"></div>
+          <div>
+            <span class="my-name" id="my-name-sidebar"></span>
+            <span class="my-status">● online</span>
+          </div>
+        </div>
+        <div class="sidebar-footer-btns">
+          <button class="icon-btn" id="theme-toggle" title="Toggle theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </button>
+          <button class="icon-btn exit-btn" id="exit-chat" title="Leave">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- OVERLAY (mobile) -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- MAIN -->
+    <main class="chat-main">
+
+      <div class="chat-header" id="chat-header">
+        <button class="icon-btn menu-btn" id="menu-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </button>
+        <div class="chat-header-info">
+          <div class="chat-header-avatar" id="chat-header-avatar">
+            <span class="channel-hash-lg">#</span>
+          </div>
+          <div>
+            <div class="chat-header-name" id="chat-header-name">general</div>
+            <div class="chat-header-sub" id="chat-header-sub">global channel</div>
+          </div>
+        </div>
+        <div>
+          <button class="icon-btn" id="back-to-general" title="Back to General" style="display:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 12l6-6M3 12l6 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="messages" id="messages">
+        <div class="messages-inner" id="messages-inner">
+          <div class="welcome-banner">
+            <div class="welcome-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2L20 7V17L12 22L4 17V7L12 2Z"/>
+                <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/>
+              </svg>
+            </div>
+            <h3>Welcome to #general</h3>
+            <p>The beginning of the nexus. Say hello!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="typing-bar" id="typing-bar" style="display:none">
+        <div class="typing-dots"><span></span><span></span><span></span></div>
+        <span class="typing-text" id="typing-text"></span>
+      </div>
+
+      <div class="input-area">
+        <div class="message-input-wrap">
+          <div class="message-input" id="message-input" contenteditable="true" data-placeholder="Message #general" role="textbox" aria-multiline="false"></div>
+        </div>
+
+        <button class="icon-btn emoji-btn" id="emoji-btn" title="Emoji">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+        </button>
+
+        <button class="send-btn" id="send-message" disabled title="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </div>
+
+      <div class="emoji-picker" id="emoji-picker" style="display:none">
+        <div class="emoji-grid" id="emoji-grid"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- REACTION POPUP -->
+  <div class="reaction-popup" id="reaction-popup" style="display:none">
+    <div class="reaction-list" id="reaction-list"></div>
+  </div>
+
+  <audio id="notif-sound" preload="auto">
+    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJiVkH5bXWyLhHVoVlBzf3lwaV5VVGV4c2toYVleY3F1bGZgW1pibnJsZmJbXGVwcGpoYl1dZnBxbGljXV9ncHBsaGNdX2hxcGxoY11gaXFwbWhiXWBpcXBsaGJdYWpxcGxoYlxhanzLwrl4UDZAc6SfnIpkQTlMeKWjlHZUQD1Ofahlnmf/AP//" type="audio/wav"/>
+  </audio>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="code.js"></script>
+</body>
+</html>
